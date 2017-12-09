@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="teamlotery" ng-controller="main">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Loto Teams</title>
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.min.js" type="text/javascript"></script>
+  <script src="js/angular.min.js" type="text/javascript"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-messaging.js"></script>
+
+  <script src="js/app.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="css/materialize.min.css">
+  <link rel="stylesheet" href="css/ghpages-materialize.css">
+  <link rel="stylesheet" href="css/style.css">
+   
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAERQdMoNXEcGa4GsBpy4rlqfhdXkrsFjI",
+    authDomain: "loto-teams.firebaseapp.com",
+    databaseURL: "https://loto-teams.firebaseio.com",
+    projectId: "loto-teams",
+    storageBucket: "",
+    messagingSenderId: "50796150576"
+  };
+  firebase.initializeApp(config);
+</script>
+</head>
+<body>
+  <div class="container">
+
+    <h4>Sorteador de times</h4>
+     <div ng-style="disableList">
+     	<label for="player">Nome do jogador:</label>
+    	<input type="text" id="myTxt" name="player" placeholder="Fulano de Tal" ng-model="player"/>
+      <a href="#" class="btn" id="mySubmit" ng-click="AddPlayer()" ng-disabled="!player" >Adicionar Jogador</a>
+ 
+      <hr>  	 	 
+
+      <div class="row">          		
+        <h4>Jogadores</h4>
+          <strong ng-repeat="player in players" class="col" style="font-size:18px;margin:15px">{{player.name}}</strong>
+       </div>    	
+
+       <hr> 
+
+       <a href="#" class="btn" ng-disabled="players.length == 0" ng-click="EndPlayer()">Avançar para times</a>
+      </div>
+  
+     <div ng-style="disableTeam" style='display: none'>   
+       <label for="team">Número de times:</label>
+       <input type="number" name="team" ng-model="nTeams">
+       <a class="btn" ng-disabled="!nTeams" ng-click="GoSort()">Avançar para sorteio</a>  
+     </div>
+
+    <div ng-style="displaySort">
+      <a class="btn" style="margin-top: 5px; margin-bottom: 5px" ng-click="Sort()">Sortear times</a>  
+      <div ng-repeat="team in teams" ng-show="teamsVisible"> 
+   	  	<strong style="font-size:20px;" class="col s3">Time</strong> 
+   	   	<div class="row"> 
+      		  <strong style="font-size:16px; margin-left: 15px;" ng-repeat="player in team | orderBy:'name'">{{player.name}} </strong>
+        </div>
+      </div>
+    </div>
+</div>
+</body>
+</html>
